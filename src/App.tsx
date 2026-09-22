@@ -1,9 +1,16 @@
 import { useState, useEffect } from "react"
 import { motion } from "framer-motion"
-import { Icon } from "@iconify/react";
+import { Icon } from "@iconify/react"
+
+type Dropdown = {
+    title: string
+    items: string[]
+    x: number
+    y: number
+}
 
 export default function App() {
-    const [dropdown, setDropdown] = useState(null)
+    const [dropdown, setDropdown] = useState<Dropdown | null>(null)
 
     useEffect(() => {
         const handleClick = () => {
@@ -17,8 +24,21 @@ export default function App() {
         }
     }, [])
 
-    // @ts-ignore
-    function openDropdown({ title, items, x, y, onSelect, onClose }) {
+    function openDropdown({
+                              title,
+                              items,
+                              x,
+                              y,
+                              onSelect,
+                              onClose
+                          }: {
+        title: string
+        items: string[]
+        x: number
+        y: number
+        onSelect: (item: string, index: number) => void
+        onClose: () => void
+    }) {
         return (
             <div
                 className="w-fit h-fit flex flex-col p-5 gap-3 bg-[#131316] rounded-2xl absolute z-50 border border-white/10"
@@ -35,7 +55,6 @@ export default function App() {
                 <hr className="text-white/10" />
 
                 <div className="w-fit h-fit flex flex-col gap-2">
-                    {/* @ts-ignore */}
                     {items.map((item, index) => (
                         <motion.button
                             initial={{ opacity: 1, scale: 1 }}
@@ -62,11 +81,15 @@ export default function App() {
 
             {/* navbar */}
             <div className="w-full p-3 flex flex-row gap-6 border-b border-white/10 sticky top-0">
-                <h2 className="hostgrotesk text-white text-lg">QTools</h2>
+                <h2 className="hostgrotesk text-white text-lg">
+                    QTools
+                </h2>
 
                 <div className="w-full flex flex-row items-center justify-start gap-7">
                     <button className="flex flex-col items-center justify-center w-fit h-fit">
-                        <h2 className="text-white/50 text-lg">Home</h2>
+                        <h2 className="text-white/50 text-lg">
+                            Home
+                        </h2>
                     </button>
 
                     <button
@@ -81,25 +104,37 @@ export default function App() {
 
                             setDropdown({
                                 title: "Tools",
-                                items: ["Calculator", "Timer", "Converter"],
+                                items: [
+                                    "Calculator",
+                                    "Timer",
+                                    "Converter"
+                                ],
                                 x: e.clientX,
                                 y: e.clientY
                             })
                         }}
                     >
-                        <h2 className="text-white/50 text-lg">Tools</h2>
+                        <h2 className="text-white/50 text-lg">
+                            Tools
+                        </h2>
                     </button>
 
                     <button className="flex flex-col items-center justify-center w-fit h-fit">
-                        <h2 className="text-white/50 text-lg">Legal</h2>
+                        <h2 className="text-white/50 text-lg">
+                            Legal
+                        </h2>
                     </button>
 
                     <button className="flex flex-col items-center justify-center w-fit h-fit">
-                        <h2 className="text-white/50 text-lg">FAQ</h2>
+                        <h2 className="text-white/50 text-lg">
+                            FAQ
+                        </h2>
                     </button>
 
                     <button className="flex flex-col items-center justify-center w-fit h-fit">
-                        <h2 className="text-white/50 text-lg">About</h2>
+                        <h2 className="text-white/50 text-lg">
+                            About
+                        </h2>
                     </button>
                 </div>
             </div>
@@ -134,21 +169,40 @@ export default function App() {
                 </div>
             </div>
 
-            {/*featured tools*/}
+            {/* featured tools */}
             <div className="w-full h-fit flex flex-col gap-6 p-6 border-b border-white/10">
-                <h2 className="w-full text-left text-white text-xl hostgrotesk">Featured Tools</h2>
+                <h2 className="w-full text-left text-white text-xl hostgrotesk">
+                    Featured Tools
+                </h2>
 
                 <div className="w-full h-fit flex flex-col gap-2">
                     <div className="w-full h-27 flex flex-row justify-between bg-[#0F0F12] p-5 rounded-sm border-t border-l-[0.5px] border-r-[0.5px] border-b-0 border-white/5">
+
                         <div className="w-full h-full flex flex-col gap-1 items-start justify-start">
-                            <h2 className="text-white w-full text-left text-lg">Youtube Video Downloader</h2>
-                            <p className="text-white/50 w-full text-left font-light">Download YouTube videos easily with our video downloader tool</p>
+                            <h2 className="text-white w-full text-left text-lg">
+                                Youtube Video Downloader
+                            </h2>
+
+                            <p className="text-white/50 w-full text-left font-light">
+                                Download YouTube videos easily with our video downloader tool
+                            </p>
                         </div>
-                        <div className="w-full h-full flex flex-col gap-0 items-end  justify-center pr-2">
-                            <motion.button initial={{opacity: 1, scale: 1}} whileHover={{opacity: 0.7, scale: 1.05}} className="flex flex-col p-2 bg-white items-center justify-center w-fit h-fit rounded-sm">
-                                <Icon icon={"akar-icons:arrow-up-right"} width={18} height={18} color={"black"} />
+
+                        <div className="w-full h-full flex flex-col gap-0 items-end justify-center pr-2">
+                            <motion.button
+                                initial={{ opacity: 1, scale: 1 }}
+                                whileHover={{ opacity: 0.7, scale: 1.05 }}
+                                className="flex flex-col p-2 bg-white items-center justify-center w-fit h-fit rounded-sm"
+                            >
+                                <Icon
+                                    icon="akar-icons:arrow-up-right"
+                                    width={18}
+                                    height={18}
+                                    color="black"
+                                />
                             </motion.button>
                         </div>
+
                     </div>
                 </div>
             </div>
@@ -156,10 +210,11 @@ export default function App() {
             {dropdown &&
                 openDropdown({
                     ...dropdown,
-                    onSelect: (item) => console.log(item),
+                    onSelect: (item: string) => console.log(item),
                     onClose: () => setDropdown(null)
                 })
             }
+
         </div>
     )
 }
